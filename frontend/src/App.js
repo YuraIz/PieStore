@@ -7,7 +7,7 @@ import "./style/Cart.scss";
 // import CakesService from "./CakesService";
 
 import { CakeTable } from "./components/CakeTable";
-import { CartDetail } from "./components/CartDetail";
+import { CartDetail } from "./components/CartDetail2";
 
 // import CartService from "./CartService";
 import { PopUp } from "./PopUp";
