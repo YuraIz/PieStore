@@ -7,7 +7,7 @@ import "./style/Cart.scss";
 // import CakesService from "./CakesService";
 
 import { CakeTable } from "./components/CakeTable";
-import { CartDetail } from "./components/CartDetail2";
+import { CartDetail } from "./components/CartDetail";
 
 // import CartService from "./CartService";
 import { PopUp } from "./PopUp";
@@ -21,11 +21,15 @@ const App = () => {
     };
 
     const [showCart, setShowCart] = useState(false);
+
     return (
         <div>
             {showCart ? (
                 <PopUp toggle={() => setShowCart(false)}>
-                    <CartDetail sharedItem={itemsCount} />
+                    <CartDetail
+                        sharedItem={itemsCount}
+                        setCount={setItemsCount}
+                    />
                 </PopUp>
             ) : null}
             <div>

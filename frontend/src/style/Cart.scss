@@ -6,6 +6,7 @@ $background: if($dark, #111, white);
 $foreground: if($dark, white, black);
 
 .PopUpBackground {
+    overflow: hidden;
     position: fixed;
     z-index: 1;
     width: 100%;
@@ -14,9 +15,58 @@ $foreground: if($dark, white, black);
 }
 
 .PopUp {
+    overflow-y: scroll;
     background-color: white;
+    z-index: 2;
     position: absolute;
     height: 100%;
-    width: 40%;
-    left: 60%;
+    width: 300pt;
+    left: calc(100% - 300pt);
+}
+
+.CartItem {
+    width: calc(100% - 10pt);
+    margin: 10pt;
+
+    img {
+        width: 50pt;
+    }
+
+    &td:nth-child(1) {
+        width: 60pt;
+    }
+
+    tr:nth-child(1) {
+        border-bottom: 1pt solid #5552;
+    }
+
+    .Counter {
+        margin-top: 3pt;
+        margin-bottom: 3pt;
+        float: right;
+
+        width: 75pt;
+        button,
+        p {
+            border-radius: 16pt;
+            color: white;
+            background-color: transparent;
+            border: none;
+            width: 25pt;
+            text-align: center;
+            float: left;
+        }
+
+        button:hover {
+            background-color: #fff3;
+        }
+
+        p {
+            margin-top: 2pt;
+            margin-bottom: -2pt;
+        }
+
+        background-color: indianred;
+        border-radius: 16pt;
+    }
 }

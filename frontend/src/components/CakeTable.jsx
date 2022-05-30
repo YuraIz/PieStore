@@ -16,13 +16,10 @@ export function CakeTable({ callback }) {
         });
     }, []);
 
-    if (cakes == null) return <div />;
+    if (cakes == null) return null;
 
     return (
         <div className="CakeTable">
-            {cakes?.map((el, i) => (
-                <CakeCard key={generateKey(i)} cake={el} callback={callback} />
-            ))}
             {cakes?.map((el, i) => (
                 <CakeCard key={generateKey(i)} cake={el} callback={callback} />
             ))}

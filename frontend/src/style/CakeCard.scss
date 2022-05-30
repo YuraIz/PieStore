@@ -14,7 +14,7 @@ $foreground: if($dark, white, black);
     color: $foreground;
     border-radius: 16pt;
     width: 3in;
-    height: 4.3in;
+    height: 4.8in;
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -96,4 +96,7 @@ $foreground: if($dark, white, black);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    max-width: 10in;
+    margin-left: auto;
+    margin-right: auto;
 }
