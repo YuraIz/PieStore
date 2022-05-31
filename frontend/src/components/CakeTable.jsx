@@ -12,7 +12,6 @@ export function CakeTable({ callback }) {
     useEffect(() => {
         cakesService.getCakes().then((data) => {
             setCakes(data.data);
-            // alert(JSON.stringify(data));
         });
     }, []);
 

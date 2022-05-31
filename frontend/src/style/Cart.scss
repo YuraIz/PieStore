@@ -19,6 +19,7 @@ $foreground: if($dark, white, black);
     background-color: white;
     z-index: 2;
     position: absolute;
+    position: fixed;
     height: 100%;
     width: 300pt;
     left: calc(100% - 300pt);

@@ -19,17 +19,18 @@ function Counter({ count, setCount }) {
     );
 }
 
-function CartItem({ item, totalCount, setTotalCount }) {
+function CartItem({ item }) {
     const [cake, setCake] = useState({});
 
     const [count, setCount] = useState(item.quantity);
     const [price, setPrice] = useState(item.total_price);
 
     const setItemCount = (newCount) => {
-        cartService
-            .updateCart(cake, newCount)
-            .then((item) => setPrice(item.total_price));
-        setTotalCount(totalCount - count + newCount);
+        cartService.updateCart(cake, newCount).then((item) => {
+            // let delta = -price;
+            // setTotalPrice(totalPrice - price + item.total_price);
+            setPrice(item.total_price);
+        });
         setCount(newCount);
     };
 
@@ -66,28 +67,30 @@ function CartItem({ item, totalCount, setTotalCount }) {
 export function CartDetail({ sharedItem, setCount }) {
     const [info, setInfo] = useState([]);
 
+    // const [totalPrice, setTotalPrice] = useState(0);
+
     useEffect(() => {
         cartService.getCart().then((data) => {
             setInfo(data);
             setCount(
                 data?.reduce((partialSum, a) => partialSum + a.quantity, 0)
             );
+            // setTotalPrice(
+            //     data?.reduce((partialSum, a) => partialSum + a.total_price, 0)
+            // );
             console.log(JSON.stringify(data));
         });
     }, [sharedItem]);
 
     return (
         <div>
-            <h4>
-                Total price: $
-                {info?.reduce((partialSum, a) => partialSum + a.total_price, 0)}
-            </h4>
+            {/* <h4>Total price: ${totalPrice}</h4> */}
             {info?.map((el, i) => (
                 <CartItem
                     key={generateKey(i)}
                     item={el}
-                    totalCount={sharedItem}
-                    setTotalCount={setCount}
+                    // totalPrice={totalPrice}
+                    // setTotalPrice={setTotalPrice}
                 />
             ))}
         </div>

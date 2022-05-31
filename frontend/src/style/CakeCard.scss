@@ -46,7 +46,7 @@ $foreground: if($dark, white, black);
 .CakeCard h3 {
     margin: 0;
     margin-left: 16pt;
-    position: relative;
+    // position: relative;
 }
 
 .CakeCard p {
@@ -99,4 +99,36 @@ $foreground: if($dark, white, black);
     max-width: 10in;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 0.6in;
+}
+
+.NavBar {
+    height: 0.5in;
+    background-color: #ffffff20;
+    backdrop-filter: blur(24px) saturate(2);
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    max-width: 12in;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.NavBar li {
+    float: left;
+    display: block;
+
+    p {
+        color: black;
+        margin: 0;
+        height: 100%;
+        text-align: center;
+        padding: 10px 16px;
+    }
+}
+
+.NavBar button {
+    float: right;
+    margin-right: 16px + 48px;
 }

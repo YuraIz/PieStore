@@ -14,6 +14,8 @@ import { PopUp } from "./PopUp";
 export const CartContext = React.createContext(0);
 // export const cakesService = new CakesService();
 
+const NavBar = ({ children }) => <ul className="NavBar">{children}</ul>;
+
 const App = () => {
     const [itemsCount, setItemsCount] = useState(0);
     const addItem = () => {
@@ -33,9 +35,14 @@ const App = () => {
                 </PopUp>
             ) : null}
             <div>
-                <button className="btn" onClick={() => setShowCart(true)}>
-                    {`Cart: ${itemsCount}`}
-                </button>
+                <NavBar>
+                    <li>
+                        <p>PieStore</p>
+                    </li>
+                    <button className="btn" onClick={() => setShowCart(true)}>
+                        {`Cart: ${itemsCount}`}
+                    </button>
+                </NavBar>
                 <CakeTable callback={addItem} />
             </div>
         </div>
