@@ -15,7 +15,7 @@ function CakeCard({ cake, callback }) {
                         cartService.updateCart(cake, 1).then((_) => callback())
                     }
                 >
-                    Add to cart
+                    В корзину
                 </button>
             </div>
         </div>

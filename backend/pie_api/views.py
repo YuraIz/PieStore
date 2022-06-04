@@ -4,11 +4,13 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.decorators import api_view
 from rest_framework import status
+import logging
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Cake, Cart, CartItem
 from .serializers import CakeSerializer, CartItemSerializer
 
+logger = logging.getLogger(__name__)
 
 @api_view(['GET', 'POST'])
 def cakes_list(request: Request):
@@ -29,6 +31,7 @@ def cakes_list(request: Request):
         serializer = CakeSerializer(
             data, context={'request': request}, many=True)
 
+        # logger.debug(f"cakes_list_get: {serializer.data}")
         return Response({'data': serializer.data, 'count': paginator.count, 'numpages': paginator.num_pages,
                          'nextlink': '/api/cakes/?page=' + str(nextPage), 'prevlink': '/api/cakes/?page=' + str(previousPage),
                          })
@@ -63,6 +66,7 @@ def cakes_detail(request: Request, pk):
             cake, data=request.data, context={'request': request})
         if serializer.is_valid():
             return Response(serializer.data)
+        logger.warning('Warning: bad request')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'DELETE':

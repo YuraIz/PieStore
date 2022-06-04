@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from distutils.debug import DEBUG
 from pathlib import Path
+from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,14 +22,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k-0=8&_ya3ohun6rfq)ey(oy&i$o!30qm39gjfw%v24wk*0po#'
+# SECRET_KEY = environ.get('SECRET_KEY', 'django-insecure-hello')
 
+SECRET_KEY = 'django-insecure-hello'
+
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'db']
+
+# DEBUG = False
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = int(environ.get('DEBUG', False))
+# DEBUG = False if DEBUG is None else int(DEBUG)    
+if DEBUG == False:
+    ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'db']
+else:
+    ALLOWED_HOSTS = []
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'db']
+
 
 # Application definition
 
@@ -79,18 +95,16 @@ WSGI_APPLICATION = 'PieStore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-import os
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'NAME': environ['POSTGRES_DB'],
+        'USER': environ['POSTGRES_USER'],
+        'PASSWORD': environ['POSTGRES_PASSWORD'],
         'HOST': 'db',
         'PORT': '5432',
         # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

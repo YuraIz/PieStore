@@ -40,7 +40,8 @@ const App = () => {
                         <p>PieStore</p>
                     </li>
                     <button className="btn" onClick={() => setShowCart(true)}>
-                        {`Cart: ${itemsCount}`}
+                        Корзина
+                        {/* {`Cart: ${itemsCount}`} */}
                     </button>
                 </NavBar>
                 <CakeTable callback={addItem} />

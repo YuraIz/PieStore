@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { cartService } from "./shared";
 import { cakesService } from "./shared";
 
@@ -34,7 +34,7 @@ function CartItem({ item }) {
         setCount(newCount);
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         cakesService.getCake(item.item).then((result) => setCake(result));
     }, []);
 
@@ -69,7 +69,7 @@ export function CartDetail({ sharedItem, setCount }) {
 
     // const [totalPrice, setTotalPrice] = useState(0);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         cartService.getCart().then((data) => {
             setInfo(data);
             setCount(

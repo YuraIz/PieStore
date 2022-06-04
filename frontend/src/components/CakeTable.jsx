@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import CakeCard from "./CakeCard";
 import { cakesService } from "./shared";
 
@@ -9,7 +9,7 @@ const generateKey = (pre) => {
 export function CakeTable({ callback }) {
     const [cakes, setCakes] = useState(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         cakesService.getCakes().then((data) => {
             setCakes(data.data);
         });

@@ -21,6 +21,8 @@ services:
     volumes:
       - ./backend:/app
     environment:
+      DEBUG: 1
+      SECRET_KEY: ${SECRET_KEY}
       POSTGRES_PASSWORD: password
       POSTGRES_USER: chef
       POSTGRES_DB: pie_store
