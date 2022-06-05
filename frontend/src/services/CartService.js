@@ -66,4 +66,11 @@ export default class CartService {
         const response = await axios.post(url, edit);
         return response.data;
     }
+
+    async deleteItems() {
+        await this.promise;
+        const url = `${API_URL}/api/cart/${this.cart_id}`;
+        const response = await axios.delete(url);
+        return response.data;
+    }
 }

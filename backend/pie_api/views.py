@@ -8,9 +8,10 @@ import logging
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Cake, Cart, CartItem
-from .serializers import CakeSerializer, CartItemSerializer
+from .serializers import CakeSerializer, CartItemSerializer, CartSerializer
 
 logger = logging.getLogger(__name__)
+
 
 @api_view(['GET', 'POST'])
 def cakes_list(request: Request):
@@ -76,18 +77,19 @@ def cakes_detail(request: Request, pk):
 
 @api_view(['GET'])
 def cart_id(request):
-    cart_id = request.session.get('cart_id')
+    if request.method == 'GET':
+        cart_id = request.session.get('cart_id')
 
-    if cart_id == None:
-        cart = Cart()
-        cart.save()
-        cart_id = cart.id
-        request.session["cart_id"] = cart_id
+        if cart_id == None:
+            cart = Cart()
+            cart.save()
+            cart_id = cart.id
+            request.session["cart_id"] = cart_id
 
-    return Response(cart_id)
+        return Response(cart_id)
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE'])
 def cart_detail(request: Request, cart_id):
 
     try:
@@ -138,5 +140,13 @@ def cart_detail(request: Request, cart_id):
         return Response(serializer.data)
 
     if request.method == 'DELETE':
+        serializer = CartItemSerializer(
+            items, context={'request': request}, many=True
+        )
+        for item in serializer.data:
+            item.pop("cart", None)
+            item["total_price"] = Cake.objects.get(
+                pk=item["item"]).price * item["quantity"]
+        logger.warning(f'New order with id={cart_id} data: {serializer.data}')
         items.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

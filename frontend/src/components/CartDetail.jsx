@@ -82,6 +82,11 @@ export function CartDetail({ sharedItem, setCount }) {
         });
     }, [sharedItem]);
 
+    const onOrder = () => {
+        cartService.deleteItems();
+        setCount(0);
+    };
+
     return (
         <div>
             {/* <h4>Total price: ${totalPrice}</h4> */}
@@ -93,6 +98,13 @@ export function CartDetail({ sharedItem, setCount }) {
                     // setTotalPrice={setTotalPrice}
                 />
             ))}
+            {info?.length === 0 ? (
+                <p>Корзина пуста</p>
+            ) : (
+                <button className="btn" onClick={onOrder}>
+                    Заказать
+                </button>
+            )}
         </div>
     );
 }
