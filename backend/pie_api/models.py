@@ -26,4 +26,5 @@ class CartItem(models.Model):
 
 
 class Cart(models.Model):
+    task_id = models.CharField(None, null=True, max_length=50)
     total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)

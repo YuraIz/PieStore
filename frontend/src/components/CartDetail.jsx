@@ -25,83 +25,65 @@ function CartItem({ item }) {
     const [count, setCount] = useState(item.quantity);
     const [price, setPrice] = useState(item.total_price);
 
+    useEffect(() => {
+        cakesService.getCake(item.item).then((result) => setCake(result));
+    }, []);
+
     const setItemCount = (newCount) => {
         cartService.updateCart(cake, newCount).then((item) => {
-            // let delta = -price;
-            // setTotalPrice(totalPrice - price + item.total_price);
             setPrice(item.total_price);
         });
         setCount(newCount);
     };
 
-    useLayoutEffect(() => {
-        cakesService.getCake(item.item).then((result) => setCake(result));
-    }, []);
-
     if (count === 0) return null;
     return (
         <table className="CartItem">
-            <tr>
-                <td>
-                    <img src={cake.image} alt={cake.name} />
-                </td>
+            <tbody>
                 <tr>
                     <td>
-                        <h5>{cake.name}</h5>
+                        <img src={cake.image} alt={cake.name} />
                     </td>
+                    <div>
+                        <td>
+                            <h5>{cake.name}</h5>
+                        </td>
+                    </div>
+                    <div>
+                        <td>{cake.description}</td>
+                    </div>
                 </tr>
                 <tr>
-                    <td>{cake.description}</td>
+                    <td>${price}</td>
+                    <td>
+                        <Counter count={count} setCount={setItemCount} />
+                    </td>
                 </tr>
-            </tr>
-            <tr>
-                <td>${price}</td>
-                <td>
-                    <Counter count={count} setCount={setItemCount} />
-                </td>
-            </tr>
+            </tbody>
         </table>
     );
 }
 
-export function CartDetail({ sharedItem, setCount }) {
+export function CartDetail({ showOrderCallback }) {
     const [info, setInfo] = useState([]);
 
-    // const [totalPrice, setTotalPrice] = useState(0);
-
-    useLayoutEffect(() => {
-        cartService.getCart().then((data) => {
-            setInfo(data);
-            setCount(
-                data?.reduce((partialSum, a) => partialSum + a.quantity, 0)
-            );
-            // setTotalPrice(
-            //     data?.reduce((partialSum, a) => partialSum + a.total_price, 0)
-            // );
-            console.log(JSON.stringify(data));
+    useEffect(() => {
+        cartService.getCart().then((result) => {
+            setInfo(result.data);
+            console.log(JSON.stringify(result));
         });
-    }, [sharedItem]);
-
-    const onOrder = () => {
-        cartService.deleteItems();
-        setCount(0);
-    };
+    }, []);
 
     return (
         <div>
-            {/* <h4>Total price: ${totalPrice}</h4> */}
             {info?.map((el, i) => (
-                <CartItem
-                    key={generateKey(i)}
-                    item={el}
-                    // totalPrice={totalPrice}
-                    // setTotalPrice={setTotalPrice}
-                />
+                <CartItem key={generateKey(i)} item={el} />
             ))}
+            {/* <OrderInfo /> */}
             {info?.length === 0 ? (
                 <p>Корзина пуста</p>
             ) : (
-                <button className="btn" onClick={onOrder}>
+                <button className="btn" onClick={showOrderCallback}>
                     Заказать
                 </button>
             )}

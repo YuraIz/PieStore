@@ -20,6 +20,12 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
     environment:
       DEBUG: 1
       SECRET_KEY: ${SECRET_KEY}
@@ -30,9 +36,33 @@ services:
   db:
     image: postgres
     restart: always
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: chef
       POSTGRES_DB: pie_store
+
+  redis:
+    image: redis
+    # ports:
+    #   - "6379:6379"
+
+  worker:
+    build:
+      context: ./backend
+    entrypoint: celery
+    command: -A PieStore worker --loglevel=info
+    environment:
+      DEBUG: 1
+      SECRET_KEY: ${SECRET_KEY}
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: chef
+      POSTGRES_DB: pie_store
+    volumes:
+      - ./backend:/app
+    links:
+      - redis
+    depends_on:
+      # - backend
+      - redis

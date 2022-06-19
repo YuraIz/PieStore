@@ -18,6 +18,12 @@ from os import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# Celery
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+
+CELERY_TRACK_STARTED = True
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -38,12 +44,11 @@ SECURE_HSTS_PRELOAD = True
 # DEBUG = False
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(environ.get('DEBUG', False))
-# DEBUG = False if DEBUG is None else int(DEBUG)    
+# DEBUG = False if DEBUG is None else int(DEBUG)
 if DEBUG == False:
     ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'db']
 else:
     ALLOWED_HOSTS = []
-
 
 
 # Application definition

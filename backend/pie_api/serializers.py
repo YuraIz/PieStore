@@ -22,4 +22,4 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ('total')
+        fields = ('total', 'task_id')
