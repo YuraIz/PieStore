@@ -18,12 +18,6 @@ from os import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Celery
-CELERY_BROKER_URL = "redis://redis:6379"
-CELERY_RESULT_BACKEND = "redis://redis:6379"
-
-CELERY_TRACK_STARTED = True
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -39,16 +33,19 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+DEBUG_PROPAGATE_EXCEPTIONS = True
+
 # ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'db']
 
 # DEBUG = False
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(environ.get('DEBUG', False))
-# DEBUG = False if DEBUG is None else int(DEBUG)
+# DEBUG = False if DEBUG is None else int(DEBUG)    
 if DEBUG == False:
-    ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'db']
+    ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', 'db', '146.190.237.149']
 else:
     ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -160,5 +157,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ALLOWED_ORIGINS = [
+    'http://146.190.237.149:3000',
     'http://localhost:3000',
 ]

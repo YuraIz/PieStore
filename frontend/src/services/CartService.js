@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:8000";
+const API_URL = "http://146.190.237.149:8000";
 
 export default class CartService {
     saveCartId() {

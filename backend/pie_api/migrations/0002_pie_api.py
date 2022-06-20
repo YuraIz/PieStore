@@ -5,17 +5,17 @@ from django.db import migrations
 
 def create_data(apps, schema_editor):
     Cake = apps.get_model('pie_api', 'Cake')
-    Cake(image='http://localhost:8080/media/cake_1.png',
+    Cake(image='http://146.190.237.149:8080/media/cake_1.png',
          name='Клюквенный торт с маскарпоне', price=10, description='Понятия не имею какой он на вкус').save()
-    Cake(image='http://localhost:8080/media/cake_2.png',
+    Cake(image='http://146.190.237.149:8080/media/cake_2.png',
          name='Шоколадный торт с клубникой', price=10, description='Торт с горьким шоколадом и клубникой').save()
-    Cake(image='http://localhost:8080/media/cake_3.png',
+    Cake(image='http://146.190.237.149:8080/media/cake_3.png',
          name='Торт "Радуга"', price=10, description='Отлично подходит для дня рождения').save()
-    Cake(image='http://localhost:8080/media/cake_4.png',
+    Cake(image='http://146.190.237.149:8080/media/cake_4.png',
          name='Торт "Молочная девочка"', price=10, description='Десерт с загадочным названием').save()
-    Cake(image='http://localhost:8080/media/cake_5.png',
+    Cake(image='http://146.190.237.149:8080/media/cake_5.png',
          name='Черничный торт', price=10, description='Может содержать следы черники').save()
-    Cake(image='http://localhost:8080/media/cake_6.png',
+    Cake(image='http://146.190.237.149:8080/media/cake_6.png',
          name='торт "Лесной мох"', price=10, description='Торт салатового цвета').save()
 
 

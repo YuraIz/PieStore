@@ -8,7 +8,7 @@ from celery import Celery
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'PieStore.settings')
 
-app = Celery('PieStore')
+app = Celery('PieStore', backend='redis://redis:6379/0', broker_url='redis://redis:6379/0')
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.
