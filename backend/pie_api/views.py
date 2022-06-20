@@ -1,6 +1,5 @@
 # Create your views here.
 
-from unittest import result
 from PieStore.tasks import make_order
 from celery.result import AsyncResult
 from PieStore.celery import app
@@ -11,17 +10,10 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 import logging
 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Cake, Cart, CartItem
 from .serializers import CakeSerializer, CartItemSerializer, CartSerializer
 
 logger = logging.getLogger(__name__)
-
-
-# @celery_app.task()
-# def add(a, b):
-#     return a + b
-
 
 @api_view(['GET', 'POST'])
 def cakes_list(request: Request):
@@ -30,20 +22,6 @@ def cakes_list(request: Request):
 
         serializer = CakeSerializer(
             cakes, context={'request': request}, many=True)
-
-        # logger.debug(f"cakes_list_get: {serializer.data}")
-        # task = add.delay(1, 2)
-
-        # task = make_order.delay(5)
-        # task = make_order.s(5).apply_async(task_id="Hello")
-
-        # task = make_order.delay(5)
-        # logger.warning(type(task.id))
-        # while not task.ready():
-        #     sleep(secs := 0.5)
-        #     logger.warning(f'{task.state}, {task.info} {task.id}')
-
-        # print(task.state, task.result)
 
         return Response({'data': serializer.data})
 
